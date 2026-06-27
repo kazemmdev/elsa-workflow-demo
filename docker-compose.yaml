@@ -4,10 +4,12 @@ services:
     container_name: elsa-postgres
     restart: unless-stopped
     environment:
+      POSTGRES_DB: elsa
       POSTGRES_USER: elsa
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: elsa
       POSTGRES_INITDB_ARGS: "--encoding=UTF8"
+    ports:
+      - "5432:5432"
     command: >
       -c max_connections=200
       -c shared_buffers=256MB
@@ -27,36 +29,28 @@ services:
     networks:
       elsa-net:
 
-  elsa-server:
-    image: elsaworkflows/elsa-server-v3:latest
-    pull_policy: always
-    container_name: elsa-server
-    restart: unless-stopped
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      HTTP_PORTS: 8080
-      HTTP__BASEURL: http://localhost:12000
-      DATABASEPROVIDER: PostgreSql
-      CONNECTIONSTRINGS__POSTGRESQL: >-
-        Server=postgres;
-        Username=elsa;
-        Database=elsa;
-        Port=5432;
-        Password=${POSTGRES_PASSWORD};
-        SSLMode=Prefer;
-        MaxPoolSize=100;
-        Timeout=60
-    ports:
-      - "12000:8080"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    deploy:
-      resources:
-        limits:
-          memory: 1G
-    networks:
-      elsa-net:
+  # elsa-server:
+  #   image: elsaworkflows/elsa-server-v3:latest
+  #   pull_policy: always
+  #   container_name: elsa-server
+  #   restart: unless-stopped
+  #   environment:
+  #     ASPNETCORE_ENVIRONMENT: Development
+  #     HTTP_PORTS: 8080
+  #     HTTP__BASEURL: http://localhost:12000
+  #     DATABASEPROVIDER: PostgreSql
+  #     CONNECTIONSTRINGS__POSTGRESQL: "Server=postgres;Username=elsa;Database=elsa;Port=5432;Password=${POSTGRES_PASSWORD};SSLMode=Prefer;MaxPoolSize=100;Timeout=60"
+  #   ports:
+  #     - "12000:8080"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 1G
+  #   networks:
+  #     elsa-net:
 
   elsa-studio:
     image: elsaworkflows/elsa-studio-v3:latest
@@ -66,19 +60,45 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       HTTP_PORTS: 8080
-      HTTP__BASEURL: http://localhost:13000
-      ELSASERVER__URL: http://localhost:12000/elsa/api
+      HTTP__BASEURL: http://localhost:3000
+      ELSASERVER__URL: http://localhost:5000/elsa/api
     ports:
-      - "13000:8080"
-    depends_on:
-      elsa-server:
-        condition: service_started
+      - "3000:8080"
     deploy:
       resources:
         limits:
           memory: 1G
     networks:
       elsa-net:
+
+  # elsa-server-and-studio:
+  #   image: elsaworkflows/elsa-server-and-studio-v3-5:latest
+  #   pull_policy: always
+  #   container_name: elsa-server-and-studio
+  #   restart: unless-stopped
+  #   environment:
+  #     ASPNETCORE_ENVIRONMENT: Development
+  #     HTTP_PORTS: 8080
+  #     HOSTING__BASEURL: http://localhost:14000
+  #     DATABASEPROVIDER: PostgreSql
+  #     CONNECTIONSTRINGS__POSTGRESQL: "Server=postgres;Username=elsa;Database=elsa;Port=5432;Password=${POSTGRES_PASSWORD};SSLMode=Prefer;MaxPoolSize=100;Timeout=60"
+  #   ports:
+  #     - "14000:8080"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+  #     start_period: 40s
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 1G
+  #   networks:
+  #     - elsa-net
 
 volumes:
   postgres-data:

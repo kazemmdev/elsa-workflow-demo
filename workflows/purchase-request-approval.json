@@ -1,0 +1,438 @@
+{
+  "id": "cbea71524fb87ca7",
+  "definitionId": "91c4c0394c69f8e",
+  "name": "Purchase Request Approval",
+  "createdAt": "2026-06-26T20:07:03.2716174+00:00",
+  "version": 8,
+  "toolVersion": "3.2.0.0",
+  "variables": [
+    {
+      "id": "6018e007c8a8e351",
+      "name": "RequestData",
+      "typeName": "Object",
+      "isArray": false,
+      "value": "{}",
+      "storageDriverTypeName": "Elsa.Workflows.Services.WorkflowStorageDriver, Elsa.Workflows.Core"
+    },
+    {
+      "id": "877ac7fbed68c06c",
+      "name": "Status",
+      "typeName": "String",
+      "isArray": false,
+      "value": "pending",
+      "storageDriverTypeName": "Elsa.Workflows.Services.WorkflowStorageDriver, Elsa.Workflows.Core"
+    },
+    {
+      "id": "4e47d52c38feb5fc",
+      "name": "ManagerDecision",
+      "typeName": "String",
+      "isArray": false,
+      "storageDriverTypeName": "Elsa.Workflows.Services.WorkflowStorageDriver, Elsa.Workflows.Core"
+    },
+    {
+      "id": "b3e7b2f93c5e9859",
+      "name": "FinanceDecision",
+      "typeName": "String",
+      "isArray": false,
+      "storageDriverTypeName": "Elsa.Workflows.Services.WorkflowStorageDriver, Elsa.Workflows.Core"
+    }
+  ],
+  "inputs": [],
+  "outputs": [],
+  "outcomes": [],
+  "customProperties": {},
+  "isReadonly": false,
+  "isSystem": false,
+  "isLatest": true,
+  "isPublished": true,
+  "options": { "autoUpdateConsumingWorkflows": false },
+  "root": {
+    "id": "8ba726f7e77233e7",
+    "nodeId": "Workflow1:8ba726f7e77233e7",
+    "name": "Flowchart1",
+    "type": "Elsa.Flowchart",
+    "version": 1,
+    "customProperties": {
+      "notFoundConnections": [],
+      "canStartWorkflow": false,
+      "runAsynchronously": false,
+      "logPersistenceMode": {
+        "default": "Inherit",
+        "inputs": {},
+        "outputs": {}
+      }
+    },
+    "metadata": {},
+    "activities": [
+      {
+        "path": {
+          "typeName": "String",
+          "expression": { "type": "Literal", "value": "purchase-request" }
+        },
+        "supportedMethods": {
+          "typeName": "String[]",
+          "expression": { "type": "Object", "value": "[\u0022POST\u0022]" }
+        },
+        "authorize": {
+          "typeName": "Boolean",
+          "expression": { "type": "Literal", "value": false }
+        },
+        "policy": { "typeName": "String", "expression": { "type": "Literal" } },
+        "requestTimeout": null,
+        "requestSizeLimit": null,
+        "fileSizeLimit": null,
+        "allowedFileExtensions": null,
+        "blockedFileExtensions": null,
+        "allowedMimeTypes": null,
+        "exposeRequestTooLargeOutcome": false,
+        "exposeFileTooLargeOutcome": false,
+        "exposeInvalidFileExtensionOutcome": false,
+        "exposeInvalidFileMimeTypeOutcome": false,
+        "parsedContent": null,
+        "files": null,
+        "routeData": null,
+        "queryStringData": null,
+        "headers": null,
+        "result": null,
+        "id": "5587a73ad5b668fd",
+        "nodeId": "Workflow1:8ba726f7e77233e7:5587a73ad5b668fd",
+        "name": "ReceiveRequest",
+        "type": "Elsa.HttpEndpoint",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": true,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": { "x": 126.2421875, "y": 45 },
+            "size": { "width": 182.484375, "height": 50 }
+          },
+          "displayText": "ReceiveRequest"
+        }
+      },
+      {
+        "variable": {
+          "id": "877ac7fbed68c06c",
+          "name": "Status",
+          "typeName": "String",
+          "value": "pending",
+          "storageDriverTypeName": "Elsa.Workflows.Services.WorkflowStorageDriver, Elsa.Workflows.Core"
+        },
+        "value": {
+          "typeName": "Object",
+          "expression": { "type": "Literal", "value": "rejected" }
+        },
+        "id": "2c1509d32beca3ec",
+        "nodeId": "Workflow1:8ba726f7e77233e7:2c1509d32beca3ec",
+        "name": "Reject By Manager",
+        "type": "Elsa.SetVariable",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": { "x": 2064.6640625, "y": 255 },
+            "size": { "width": 202.3125, "height": 60 }
+          },
+          "displayText": "Reject By Manager"
+        }
+      },
+      {
+        "id": "6a520e37cf693cfb",
+        "nodeId": "Workflow1:8ba726f7e77233e7:6a520e37cf693cfb",
+        "name": "Finish1",
+        "type": "Elsa.Finish",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": { "x": 2334.390625, "y": 45 },
+            "size": { "width": 110.40625, "height": 50 }
+          }
+        }
+      },
+      {
+        "variable": {
+          "id": "877ac7fbed68c06c",
+          "name": "Status",
+          "typeName": "String",
+          "value": "pending",
+          "storageDriverTypeName": "Elsa.Workflows.Services.WorkflowStorageDriver, Elsa.Workflows.Core"
+        },
+        "value": {
+          "typeName": "Object",
+          "expression": { "type": "Literal", "value": "rejected" }
+        },
+        "id": "904e17ac2727b1b1",
+        "nodeId": "Workflow1:8ba726f7e77233e7:904e17ac2727b1b1",
+        "name": "SetVariable3",
+        "type": "Elsa.SetVariable",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": { "x": 2064.6640625, "y": 150 },
+            "size": { "width": 202.3125, "height": 60 }
+          },
+          "displayText": "Reject By Finance"
+        }
+      },
+      {
+        "variable": {
+          "id": "877ac7fbed68c06c",
+          "name": "Status",
+          "typeName": "String",
+          "value": "pending",
+          "storageDriverTypeName": "Elsa.Workflows.Services.WorkflowStorageDriver, Elsa.Workflows.Core"
+        },
+        "value": {
+          "typeName": "Object",
+          "expression": { "type": "Literal", "value": "completed" }
+        },
+        "id": "277d6626f37c2a8b",
+        "nodeId": "Workflow1:8ba726f7e77233e7:277d6626f37c2a8b",
+        "name": "SetVariable4",
+        "type": "Elsa.SetVariable",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": { "x": 2064.6640625, "y": 45 },
+            "size": { "width": 219.046875, "height": 60 }
+          },
+          "displayText": "Approved By Finance"
+        }
+      },
+      {
+        "taskName": {
+          "typeName": "String",
+          "expression": { "type": "Literal", "value": "FinanceApproval" }
+        },
+        "payload": null,
+        "result": {
+          "typeName": "Object",
+          "memoryReference": { "id": "b3e7b2f93c5e9859" }
+        },
+        "id": "f926995c3049242b",
+        "nodeId": "Workflow1:8ba726f7e77233e7:f926995c3049242b",
+        "name": "FinanceReview",
+        "type": "Elsa.RunTask",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": { "x": 1515.625, "y": 45 },
+            "size": { "width": 200, "height": 60 }
+          },
+          "displayText": "Finance Review"
+        }
+      },
+      {
+        "taskName": {
+          "typeName": "String",
+          "expression": { "type": "Literal", "value": "ManagerApproval" }
+        },
+        "payload": null,
+        "result": {
+          "typeName": "Object",
+          "memoryReference": { "id": "4e47d52c38feb5fc" }
+        },
+        "id": "1178efc7b45c3de4",
+        "nodeId": "Workflow1:8ba726f7e77233e7:1178efc7b45c3de4",
+        "name": "Manager Review",
+        "type": "Elsa.RunTask",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": { "x": 976.109375, "y": 45 },
+            "size": { "width": 200, "height": 60 }
+          },
+          "displayText": "Manager Review"
+        }
+      },
+      {
+        "variable": {
+          "id": "6018e007c8a8e351",
+          "name": "RequestData",
+          "typeName": "Object",
+          "value": "{}",
+          "storageDriverTypeName": "Elsa.Workflows.Services.WorkflowStorageDriver, Elsa.Workflows.Core"
+        },
+        "value": {
+          "typeName": "Object",
+          "expression": { "type": "JavaScript", "value": "getLastResult()" }
+        },
+        "id": "109a4dc32d20bed5",
+        "nodeId": "Workflow1:8ba726f7e77233e7:109a4dc32d20bed5",
+        "name": "RequestData",
+        "type": "Elsa.SetVariable",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": { "x": 402.4765625, "y": 45 },
+            "size": { "width": 159.984375, "height": 50 }
+          },
+          "displayText": "RequestData"
+        }
+      },
+      {
+        "statusCode": {
+          "typeName": "System.Net.HttpStatusCode, System.Net.Primitives",
+          "expression": { "type": "Literal", "value": "OK" }
+        },
+        "content": {
+          "typeName": "Object",
+          "expression": {
+            "type": "JavaScript",
+            "value": "JSON.stringify({\n  message: \u0022Request submitted successfully\u0022,\n  instanceId: getWorkflowInstanceId(),\n  status: \u0022pending_manager_approval\u0022\n})"
+          }
+        },
+        "contentType": {
+          "typeName": "String",
+          "expression": { "type": "Literal", "value": "application/json" }
+        },
+        "responseHeaders": {
+          "typeName": "Elsa.Http.Models.HttpHeaders, Elsa.Http",
+          "expression": { "type": "Literal", "value": "{}" }
+        },
+        "id": "3e6af121b702222e",
+        "nodeId": "Workflow1:8ba726f7e77233e7:3e6af121b702222e",
+        "name": "WriteHttpResponse1",
+        "type": "Elsa.WriteHttpResponse",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": { "x": 679.2890625, "y": 45 },
+            "size": { "width": 183.640625, "height": 50 }
+          }
+        }
+      },
+      {
+        "condition": {
+          "typeName": "Boolean",
+          "expression": {
+            "type": "JavaScript",
+            "value": "getVariable(\u0022ManagerDecision\u0022) == \u0022approved\u0022"
+          }
+        },
+        "id": "cc54fd8be8de3ee7",
+        "nodeId": "Workflow1:8ba726f7e77233e7:cc54fd8be8de3ee7",
+        "name": "FlowDecision1",
+        "type": "Elsa.FlowDecision",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": { "x": 1245.8671875, "y": 45 },
+            "size": { "width": 129.515625, "height": 50 }
+          }
+        }
+      },
+      {
+        "condition": {
+          "typeName": "Boolean",
+          "expression": {
+            "type": "JavaScript",
+            "value": "getVariable(\u0022FinanceDecision\u0022) == \u0022approved\u0022"
+          }
+        },
+        "id": "3cd443c0461071f6",
+        "nodeId": "Workflow1:8ba726f7e77233e7:3cd443c0461071f6",
+        "name": "FlowDecision2",
+        "type": "Elsa.FlowDecision",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": { "x": 1785.3828125, "y": 45 },
+            "size": { "width": 129.515625, "height": 50 }
+          }
+        }
+      }
+    ],
+    "variables": [],
+    "connections": [
+      {
+        "source": { "activity": "3cd443c0461071f6", "port": "True" },
+        "target": { "activity": "277d6626f37c2a8b", "port": "In" }
+      },
+      {
+        "source": { "activity": "cc54fd8be8de3ee7", "port": "True" },
+        "target": { "activity": "f926995c3049242b", "port": "In" }
+      },
+      {
+        "source": { "activity": "f926995c3049242b", "port": "Done" },
+        "target": { "activity": "3cd443c0461071f6", "port": "In" }
+      },
+      {
+        "source": { "activity": "3cd443c0461071f6", "port": "False" },
+        "target": { "activity": "904e17ac2727b1b1", "port": "In" }
+      },
+      {
+        "source": { "activity": "904e17ac2727b1b1", "port": "Done" },
+        "target": { "activity": "6a520e37cf693cfb", "port": "In" }
+      },
+      {
+        "source": { "activity": "3e6af121b702222e", "port": "Done" },
+        "target": { "activity": "1178efc7b45c3de4", "port": "In" }
+      },
+      {
+        "source": { "activity": "1178efc7b45c3de4", "port": "Done" },
+        "target": { "activity": "cc54fd8be8de3ee7", "port": "In" }
+      },
+      {
+        "source": { "activity": "cc54fd8be8de3ee7", "port": "False" },
+        "target": { "activity": "2c1509d32beca3ec", "port": "In" }
+      },
+      {
+        "source": { "activity": "2c1509d32beca3ec", "port": "Done" },
+        "target": { "activity": "6a520e37cf693cfb", "port": "In" }
+      },
+      {
+        "source": { "activity": "109a4dc32d20bed5", "port": "Done" },
+        "target": { "activity": "3e6af121b702222e", "port": "In" }
+      },
+      {
+        "source": { "activity": "5587a73ad5b668fd", "port": "Done" },
+        "target": { "activity": "109a4dc32d20bed5", "port": "In" }
+      },
+      {
+        "source": { "activity": "277d6626f37c2a8b", "port": "Done" },
+        "target": { "activity": "6a520e37cf693cfb", "port": "In" }
+      }
+    ]
+  }
+}
