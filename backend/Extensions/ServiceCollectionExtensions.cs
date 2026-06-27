@@ -42,9 +42,8 @@ public static class ServiceCollectionExtensions
             })
             .AddRoles<ApplicationRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultTokenProviders();
-
-        services.AddSignInManager<SignInManager<ApplicationUser>>();
+            .AddDefaultTokenProviders()
+            .AddSignInManager<SignInManager<ApplicationUser>>();
 
         return services;
     }
