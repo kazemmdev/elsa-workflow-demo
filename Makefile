@@ -8,6 +8,7 @@ help:
 	@echo "  make infra    Start PostgreSQL and Elsa Studio only"
 	@echo "  make api      Start the .NET backend only"
 	@echo "  make down     Stop all containers"
+	@echo "  make down     Stop all containers and remove volumes"
 	@echo "  make restart  Restart containers then run the API"
 	@echo "  make logs     Tail container logs"
 
@@ -24,6 +25,9 @@ api:
 
 down:
 	docker compose down
+
+down:
+	docker compose down -v
 
 restart:
 	docker compose restart

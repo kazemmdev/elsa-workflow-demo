@@ -39,15 +39,6 @@ That's it. Starts PostgreSQL and Elsa Studio in the background, waits for the da
 
 **Studio login:** `admin` / `Admin@12345!`
 
-Other commands:
-
-```bash
-make infra    # Docker only (PostgreSQL + Studio)
-make api      # .NET backend only (if infra is already up)
-make down     # Stop all containers
-make logs     # Tail container logs
-```
-
 ---
 
 ## Roles
@@ -138,5 +129,5 @@ workflows/
 
 ```bash
 make down          # Stop containers, keep data
-make down && docker compose down -v  # Stop and wipe everything
+make clean         # Stop and wipe everything
 ```
