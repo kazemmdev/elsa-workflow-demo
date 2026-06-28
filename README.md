@@ -10,7 +10,7 @@ The workflow covers the full lifecycle of a purchase request: submission → man
 
 An employee submits a purchase request via HTTP. The workflow suspends, waits for a manager to approve or reject, and if approved, hands off to finance for a second review. Each approval step is an external task — the workflow holds state between steps, so nothing is lost if the server restarts.
 
-![image](/docs/image.png)
+![image](/assets/image.png)
 
 ## Stack
 
