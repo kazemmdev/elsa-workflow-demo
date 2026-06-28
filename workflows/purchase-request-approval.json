@@ -1,9 +1,10 @@
 {
-  "id": "cbea71524fb87ca7",
-  "definitionId": "91c4c0394c69f8e",
+  "$schema": "https://elsaworkflows.io/schemas/workflow-definition/v3.0.0/schema.json",
+  "id": "a4ca085580674202",
+  "definitionId": "d46d6c16300b1c18",
   "name": "Purchase Request Approval",
-  "createdAt": "2026-06-26T20:07:03.2716174+00:00",
-  "version": 8,
+  "createdAt": "2026-06-28T15:37:00.743671\u002B00:00",
+  "version": 3,
   "toolVersion": "3.2.0.0",
   "variables": [
     {
@@ -70,7 +71,7 @@
           "expression": { "type": "Literal", "value": "purchase-request" }
         },
         "supportedMethods": {
-          "typeName": "String[]",
+          "typeName": "List\u003CString\u003E",
           "expression": { "type": "Object", "value": "[\u0022POST\u0022]" }
         },
         "authorize": {
@@ -141,52 +142,6 @@
         }
       },
       {
-        "id": "6a520e37cf693cfb",
-        "nodeId": "Workflow1:8ba726f7e77233e7:6a520e37cf693cfb",
-        "name": "Finish1",
-        "type": "Elsa.Finish",
-        "version": 1,
-        "customProperties": {
-          "canStartWorkflow": false,
-          "runAsynchronously": false
-        },
-        "metadata": {
-          "designer": {
-            "position": { "x": 2334.390625, "y": 45 },
-            "size": { "width": 110.40625, "height": 50 }
-          }
-        }
-      },
-      {
-        "variable": {
-          "id": "877ac7fbed68c06c",
-          "name": "Status",
-          "typeName": "String",
-          "value": "pending",
-          "storageDriverTypeName": "Elsa.Workflows.Services.WorkflowStorageDriver, Elsa.Workflows.Core"
-        },
-        "value": {
-          "typeName": "Object",
-          "expression": { "type": "Literal", "value": "rejected" }
-        },
-        "id": "904e17ac2727b1b1",
-        "nodeId": "Workflow1:8ba726f7e77233e7:904e17ac2727b1b1",
-        "name": "SetVariable3",
-        "type": "Elsa.SetVariable",
-        "version": 1,
-        "customProperties": {
-          "canStartWorkflow": false,
-          "runAsynchronously": false
-        },
-        "metadata": {
-          "designer": {
-            "position": { "x": 2064.6640625, "y": 150 },
-            "size": { "width": 202.3125, "height": 60 }
-          },
-          "displayText": "Reject By Finance"
-        }
-      },
-      {
         "variable": {
           "id": "877ac7fbed68c06c",
           "name": "Status",
@@ -213,6 +168,108 @@
             "size": { "width": 219.046875, "height": 60 }
           },
           "displayText": "Approved By Finance"
+        }
+      },
+      {
+        "variable": {
+          "id": "6018e007c8a8e351",
+          "name": "RequestData",
+          "typeName": "Object",
+          "value": "{}",
+          "storageDriverTypeName": "Elsa.Workflows.Services.WorkflowStorageDriver, Elsa.Workflows.Core"
+        },
+        "value": {
+          "typeName": "Object",
+          "expression": {
+            "type": "JavaScript",
+            "value": "getOutputFrom(\u0027ReceiveRequest\u0027, \u0027ParsedContent\u0027)"
+          }
+        },
+        "id": "109a4dc32d20bed5",
+        "nodeId": "Workflow1:8ba726f7e77233e7:109a4dc32d20bed5",
+        "name": "RequestData",
+        "type": "Elsa.SetVariable",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": { "x": 402.4765625, "y": 45 },
+            "size": { "width": 159.984375, "height": 50 }
+          },
+          "displayText": "RequestData"
+        }
+      },
+      {
+        "condition": {
+          "typeName": "Boolean",
+          "expression": {
+            "type": "JavaScript",
+            "value": "getVariable(\u0022FinanceDecision\u0022) == \u0022approved\u0022"
+          }
+        },
+        "id": "3cd443c0461071f6",
+        "nodeId": "Workflow1:8ba726f7e77233e7:3cd443c0461071f6",
+        "name": "FlowDecision2",
+        "type": "Elsa.FlowDecision",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": { "x": 1785.3828125, "y": 45 },
+            "size": { "width": 129.515625, "height": 50 }
+          }
+        }
+      },
+      {
+        "variable": {
+          "id": "877ac7fbed68c06c",
+          "name": "Status",
+          "typeName": "String",
+          "value": "pending",
+          "storageDriverTypeName": "Elsa.Workflows.Services.WorkflowStorageDriver, Elsa.Workflows.Core"
+        },
+        "value": {
+          "typeName": "Object",
+          "expression": { "type": "Literal", "value": "rejected" }
+        },
+        "id": "904e17ac2727b1b1",
+        "nodeId": "Workflow1:8ba726f7e77233e7:904e17ac2727b1b1",
+        "name": "SetVariable3",
+        "type": "Elsa.SetVariable",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": { "x": 2064.6640625, "y": 160 },
+            "size": { "width": 202.3125, "height": 60 }
+          },
+          "displayText": "Reject By Finance"
+        }
+      },
+      {
+        "id": "6a520e37cf693cfb",
+        "nodeId": "Workflow1:8ba726f7e77233e7:6a520e37cf693cfb",
+        "name": "Finish1",
+        "type": "Elsa.Finish",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": { "x": 2394.390625, "y": 45 },
+            "size": { "width": 110.40625, "height": 50 }
+          }
         }
       },
       {
@@ -243,6 +300,30 @@
         }
       },
       {
+        "condition": {
+          "typeName": "Boolean",
+          "expression": {
+            "type": "JavaScript",
+            "value": "getVariable(\u0022ManagerDecision\u0022) == \u0022approved\u0022"
+          }
+        },
+        "id": "cc54fd8be8de3ee7",
+        "nodeId": "Workflow1:8ba726f7e77233e7:cc54fd8be8de3ee7",
+        "name": "FlowDecision1",
+        "type": "Elsa.FlowDecision",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": { "x": 1245.8671875, "y": 45 },
+            "size": { "width": 129.515625, "height": 50 }
+          }
+        }
+      },
+      {
         "taskName": {
           "typeName": "String",
           "expression": { "type": "Literal", "value": "ManagerApproval" }
@@ -270,35 +351,6 @@
         }
       },
       {
-        "variable": {
-          "id": "6018e007c8a8e351",
-          "name": "RequestData",
-          "typeName": "Object",
-          "value": "{}",
-          "storageDriverTypeName": "Elsa.Workflows.Services.WorkflowStorageDriver, Elsa.Workflows.Core"
-        },
-        "value": {
-          "typeName": "Object",
-          "expression": { "type": "JavaScript", "value": "getLastResult()" }
-        },
-        "id": "109a4dc32d20bed5",
-        "nodeId": "Workflow1:8ba726f7e77233e7:109a4dc32d20bed5",
-        "name": "RequestData",
-        "type": "Elsa.SetVariable",
-        "version": 1,
-        "customProperties": {
-          "canStartWorkflow": false,
-          "runAsynchronously": false
-        },
-        "metadata": {
-          "designer": {
-            "position": { "x": 402.4765625, "y": 45 },
-            "size": { "width": 159.984375, "height": 50 }
-          },
-          "displayText": "RequestData"
-        }
-      },
-      {
         "statusCode": {
           "typeName": "System.Net.HttpStatusCode, System.Net.Primitives",
           "expression": { "type": "Literal", "value": "OK" }
@@ -315,7 +367,7 @@
           "expression": { "type": "Literal", "value": "application/json" }
         },
         "responseHeaders": {
-          "typeName": "Elsa.Http.Models.HttpHeaders, Elsa.Http",
+          "typeName": "HttpHeaders",
           "expression": { "type": "Literal", "value": "{}" }
         },
         "id": "3e6af121b702222e",
@@ -329,56 +381,8 @@
         },
         "metadata": {
           "designer": {
-            "position": { "x": 679.2890625, "y": 45 },
+            "position": { "x": 699.2890625, "y": 45 },
             "size": { "width": 183.640625, "height": 50 }
-          }
-        }
-      },
-      {
-        "condition": {
-          "typeName": "Boolean",
-          "expression": {
-            "type": "JavaScript",
-            "value": "getVariable(\u0022ManagerDecision\u0022) == \u0022approved\u0022"
-          }
-        },
-        "id": "cc54fd8be8de3ee7",
-        "nodeId": "Workflow1:8ba726f7e77233e7:cc54fd8be8de3ee7",
-        "name": "FlowDecision1",
-        "type": "Elsa.FlowDecision",
-        "version": 1,
-        "customProperties": {
-          "canStartWorkflow": false,
-          "runAsynchronously": false
-        },
-        "metadata": {
-          "designer": {
-            "position": { "x": 1245.8671875, "y": 45 },
-            "size": { "width": 129.515625, "height": 50 }
-          }
-        }
-      },
-      {
-        "condition": {
-          "typeName": "Boolean",
-          "expression": {
-            "type": "JavaScript",
-            "value": "getVariable(\u0022FinanceDecision\u0022) == \u0022approved\u0022"
-          }
-        },
-        "id": "3cd443c0461071f6",
-        "nodeId": "Workflow1:8ba726f7e77233e7:3cd443c0461071f6",
-        "name": "FlowDecision2",
-        "type": "Elsa.FlowDecision",
-        "version": 1,
-        "customProperties": {
-          "canStartWorkflow": false,
-          "runAsynchronously": false
-        },
-        "metadata": {
-          "designer": {
-            "position": { "x": 1785.3828125, "y": 45 },
-            "size": { "width": 129.515625, "height": 50 }
           }
         }
       }
@@ -387,51 +391,63 @@
     "connections": [
       {
         "source": { "activity": "3cd443c0461071f6", "port": "True" },
-        "target": { "activity": "277d6626f37c2a8b", "port": "In" }
+        "target": { "activity": "277d6626f37c2a8b", "port": "In" },
+        "vertices": []
       },
       {
         "source": { "activity": "cc54fd8be8de3ee7", "port": "True" },
-        "target": { "activity": "f926995c3049242b", "port": "In" }
+        "target": { "activity": "f926995c3049242b", "port": "In" },
+        "vertices": []
       },
       {
         "source": { "activity": "f926995c3049242b", "port": "Done" },
-        "target": { "activity": "3cd443c0461071f6", "port": "In" }
+        "target": { "activity": "3cd443c0461071f6", "port": "In" },
+        "vertices": []
       },
       {
         "source": { "activity": "3cd443c0461071f6", "port": "False" },
-        "target": { "activity": "904e17ac2727b1b1", "port": "In" }
+        "target": { "activity": "904e17ac2727b1b1", "port": "In" },
+        "vertices": []
       },
       {
         "source": { "activity": "904e17ac2727b1b1", "port": "Done" },
-        "target": { "activity": "6a520e37cf693cfb", "port": "In" }
+        "target": { "activity": "6a520e37cf693cfb", "port": "In" },
+        "vertices": []
       },
       {
         "source": { "activity": "3e6af121b702222e", "port": "Done" },
-        "target": { "activity": "1178efc7b45c3de4", "port": "In" }
+        "target": { "activity": "1178efc7b45c3de4", "port": "In" },
+        "vertices": []
       },
       {
         "source": { "activity": "1178efc7b45c3de4", "port": "Done" },
-        "target": { "activity": "cc54fd8be8de3ee7", "port": "In" }
+        "target": { "activity": "cc54fd8be8de3ee7", "port": "In" },
+        "vertices": []
       },
       {
         "source": { "activity": "cc54fd8be8de3ee7", "port": "False" },
-        "target": { "activity": "2c1509d32beca3ec", "port": "In" }
+        "target": { "activity": "2c1509d32beca3ec", "port": "In" },
+        "vertices": []
       },
       {
         "source": { "activity": "2c1509d32beca3ec", "port": "Done" },
-        "target": { "activity": "6a520e37cf693cfb", "port": "In" }
+        "target": { "activity": "6a520e37cf693cfb", "port": "In" },
+        "vertices": []
       },
       {
         "source": { "activity": "109a4dc32d20bed5", "port": "Done" },
-        "target": { "activity": "3e6af121b702222e", "port": "In" }
+        "target": { "activity": "3e6af121b702222e", "port": "In" },
+        "vertices": []
       },
       {
         "source": { "activity": "5587a73ad5b668fd", "port": "Done" },
-        "target": { "activity": "109a4dc32d20bed5", "port": "In" }
+        "target": { "activity": "109a4dc32d20bed5", "port": "In" },
+        "vertices": []
       },
       {
         "source": { "activity": "277d6626f37c2a8b", "port": "Done" },
-        "target": { "activity": "6a520e37cf693cfb", "port": "In" }
+        "target": { "activity": "6a520e37cf693cfb", "port": "In" },
+        "vertices": []
       }
     ]
   }
