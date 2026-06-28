@@ -38,17 +38,14 @@ public sealed class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
     public async Task<IActionResult> Login([FromBody] LoginRequest request, CancellationToken cancellationToken)
     {
-        // 1. Look up user
         var user = await _users.FindByNameAsync(request.UserName);
         if (user is null)
             return Unauthorized(new { message = "Invalid credentials." });
 
-        // 2. Check soft-delete flag before touching SignInManager
         if (!user.IsActive)
             return StatusCode(StatusCodes.Status403Forbidden,
                 new { message = "Account is deactivated." });
 
-        // 3. Validate password (respects lockout)
         var result = await _signIn.CheckPasswordSignInAsync(
             user, request.Password, lockoutOnFailure: true);
 
@@ -61,7 +58,6 @@ public sealed class AuthController : ControllerBase
             return Unauthorized(new { message = "Invalid credentials." });
         }
 
-        // 4. Stamp last-login and issue token
         user.LastLoginAt = DateTimeOffset.UtcNow;
         await _users.UpdateAsync(user);
 
